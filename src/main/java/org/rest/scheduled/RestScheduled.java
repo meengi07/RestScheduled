@@ -1,4 +1,4 @@
-package org.rest.api.restscheduled;
+package org.rest.scheduled;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package org.rest.api.restscheduled;
+package org.rest.scheduled;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

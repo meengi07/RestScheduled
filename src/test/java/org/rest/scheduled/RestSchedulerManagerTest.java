@@ -1,4 +1,4 @@
-package org.rest.api.restscheduled;
+package org.rest.scheduled;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,4 +1,4 @@
-package org.rest.api.restscheduled;
+package org.rest.scheduled;
 
 import java.lang.reflect.Method;
 import javax.annotation.PostConstruct;
