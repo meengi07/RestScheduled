@@ -10,12 +10,12 @@ import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SchedulerManager {
+public class RestSchedulerManager {
 
     private final TaskScheduler taskScheduler;
     private final Map<String, RestScheduledTask> scheduledTasks = new ConcurrentHashMap<>();
 
-    public SchedulerManager(TaskScheduler taskScheduler) {
+    public RestSchedulerManager(TaskScheduler taskScheduler) {
         this.taskScheduler = taskScheduler;
     }
 
@@ -27,8 +27,10 @@ public class SchedulerManager {
     public void stopTask(String name) {
         RestScheduledTask scheduledTask = scheduledTasks.get(name);
         if (scheduledTask != null && scheduledTask.getScheduledFuture() != null) {
-            scheduledTask.getScheduledFuture().cancel(false);
-            scheduledTask.setScheduledFuture(null);
+            boolean cancel = scheduledTask.getScheduledFuture().cancel(false);
+            if(cancel) {
+                scheduledTask.setScheduledFuture(null);
+            }
         }
     }
 

@@ -10,15 +10,15 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ScheduledBeanProcessor implements BeanPostProcessor, ApplicationContextAware {
+public class RestScheduledBeanProcessor implements BeanPostProcessor, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
-    private SchedulerManager schedulerManager;
+    private RestSchedulerManager restSchedulerManager;
 
-    public ScheduledBeanProcessor(ApplicationContext applicationContext,
-        SchedulerManager schedulerManager) {
+    public RestScheduledBeanProcessor(ApplicationContext applicationContext,
+        RestSchedulerManager restSchedulerManager) {
         this.applicationContext = applicationContext;
-        this.schedulerManager = schedulerManager;
+        this.restSchedulerManager = restSchedulerManager;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ScheduledBeanProcessor implements BeanPostProcessor, ApplicationCon
             if (annotation != null) {
                 String taskName = annotation.name();
                 String cronExpression = annotation.cron();
-                schedulerManager.scheduleTask(taskName, () -> {
+                restSchedulerManager.scheduleTask(taskName, () -> {
                     try {
                         method.setAccessible(true);
                         method.invoke(applicationContext.getBean(targetClass));
@@ -49,6 +49,6 @@ public class ScheduledBeanProcessor implements BeanPostProcessor, ApplicationCon
 
     @PostConstruct
     public void init() {
-        this.schedulerManager = applicationContext.getBean(SchedulerManager.class);
+        this.restSchedulerManager = applicationContext.getBean(RestSchedulerManager.class);
     }
 }
